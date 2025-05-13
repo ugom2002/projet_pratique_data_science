@@ -4,3 +4,4 @@ news_data/
 Companies_historical_data
 __pycache__
 ratios_compagnies.csv
+recommendations.json
