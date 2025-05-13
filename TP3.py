@@ -95,11 +95,11 @@ def compare_models():
                                             X_train, X_test, y_train, y_test, X, features)
 
     scores['KNN'] = run_classifier("KNN", KNeighborsClassifier(),
-                                   {"n_neighbors": [3, 5, 7]},
+                                   {"n_neighbors": [5]},
                                    X_train, X_test, y_train, y_test, X, features)
 
     scores['SVM'] = run_classifier("SVM", SVC(probability=True),
-                                   {"C": [0.1, 1, 10], "kernel": ["rbf", "linear"]},
+                                   {"C": [0.1, 1, 10], "kernel": ["rbf"]},
                                    X_train, X_test, y_train, y_test, X, features)
 
     scores['Logistic Regression'] = run_classifier("Logistic Regression", LogisticRegression(max_iter=1000),
