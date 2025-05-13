@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime, timedelta
 from statistics import mode
+import model_import
 
 # TPs importés
 import TP1
@@ -117,6 +118,7 @@ def main():
 
     # ---------- 7. Fine-tuning des classifieurs (TP7) ----------
     dataset = TP7.load_financial_datasets()
+    model_import.download_and_save_model()
     #TP7.train_model("bert-base-uncased", dataset, batch_size=16, num_epochs=2)
     #TP7.train_model("yiyanghkust/finbert-tone", dataset, batch_size=16, num_epochs=2)
 
