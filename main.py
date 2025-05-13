@@ -26,7 +26,7 @@ def aggregate_recommendations(companies,
                               sentiment_signal,
                               deep_signal):
     """
-    Nouvelle stratégie d’agrégation :
+    Stratégie d’agrégation :
     - BUY si Classif = 2 ET Sentiment = 2 ET LSTM RMSE < XGBoost RMSE
     - SELL si Classif = 0 ET Sentiment = 0 ET LSTM RMSE < XGBoost RMSE
     - HOLD sinon
@@ -118,7 +118,6 @@ def main():
 
     # ---------- 7. Fine-tuning des classifieurs (TP7) ----------
     dataset = TP7.load_financial_datasets()
-    model_import.download_and_save_model()
     #TP7.train_model("bert-base-uncased", dataset, batch_size=16, num_epochs=2)
     #TP7.train_model("yiyanghkust/finbert-tone", dataset, batch_size=16, num_epochs=2)
 
