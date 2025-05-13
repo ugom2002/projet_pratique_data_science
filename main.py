@@ -3,6 +3,7 @@ import json
 from datetime import datetime, timedelta
 from statistics import mode
 import model_import
+# FONCTIONNE SOUS PYTHON 3.12.3
 
 # TPs importés
 import TP1
