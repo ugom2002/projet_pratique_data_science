@@ -78,16 +78,16 @@ def run_classifier(name, model, param_grid, X_train, X_test, y_train, y_test, X,
     # SHAP pour Random Forest uniquement
     if name == "Random Forest":
         explainer = shap.TreeExplainer(best_model)
-        shap_values = explainer.shap_values(X_test)
+        shap_values = explainer.shap_values(X_train)
         
         print("\n--- SHAP Summary Plot (classe 0) ---")
-        shap.summary_plot(shap_values[0], X_test, feature_names=features)
+        shap.summary_plot(shap_values[0], X_train, feature_names=features)
         
         print("\n--- SHAP Summary Plot (classe 1) ---")
-        shap.summary_plot(shap_values[1], X_test, feature_names=features)
+        shap.summary_plot(shap_values[1], X_train, feature_names=features)
         
         print("\n--- SHAP Summary Plot (classe 2) ---")
-        shap.summary_plot(shap_values[2], X_test, feature_names=features)
+        shap.summary_plot(shap_values[2], X_train, feature_names=features)
 
     return accuracy_score(y_test, y_pred)
 
