@@ -97,15 +97,15 @@ def compare_models():
     (X_train, X_test, y_train, y_test), X, features = process_for_classification(df)
 
     scores = {}
-    """scores['XGBoost'] = run_classifier("XGBoost", XGBClassifier(use_label_encoder=False, eval_metric='mlogloss'),
+    scores['XGBoost'] = run_classifier("XGBoost", XGBClassifier(use_label_encoder=False, eval_metric='mlogloss'),
                                        {"max_depth": [3, 5], "n_estimators": [100, 200]},
-                                       X_train, X_test, y_train, y_test, X, features)"""
+                                       X_train, X_test, y_train, y_test, X, features)
 
     scores['Random Forest'] = run_classifier("Random Forest", RandomForestClassifier(),
                                             {"n_estimators": [100, 200]},
                                             X_train, X_test, y_train, y_test, X, features)
 
-    """scores['KNN'] = run_classifier("KNN", KNeighborsClassifier(),
+    scores['KNN'] = run_classifier("KNN", KNeighborsClassifier(),
                                    {"n_neighbors": [5]},
                                    X_train, X_test, y_train, y_test, X, features)
 
@@ -115,7 +115,7 @@ def compare_models():
 
     scores['Logistic Regression'] = run_classifier("Logistic Regression", LogisticRegression(max_iter=1000),
                                                   {"C": [0.1, 1, 10]},
-                                                  X_train, X_test, y_train, y_test, X, features)"""
+                                                  X_train, X_test, y_train, y_test, X, features)
 
     print("\n=== Tableau des performances ===")
     for model, score in scores.items():
