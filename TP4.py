@@ -62,6 +62,7 @@ def evaluate_model(name, model, param_grid, x_train, x_test, y_train, y_test, sc
     plt.title(f"{name} - Valeurs réelles vs prédictions")
     plt.legend()
     plt.grid(True)
+    plt.show()
 
     return {'Modèle': name, 'MSE': mse, 'RMSE': rmse}
 
@@ -72,7 +73,7 @@ def run_all_models(file_path):
     results = []
 
     results.append(evaluate_model("XGBoost", XGBRegressor(objective='reg:squarederror'),
-                                  {"max_depth": [3, 5], "n_estimators": [100, 200]},
+                                  {"max_depth": [3, 5, 10], "n_estimators": [100, 200]},
                                   x_train, x_test, y_train, y_test, scaler, close_prices))
 
     results.append(evaluate_model("Random Forest", RandomForestRegressor(),

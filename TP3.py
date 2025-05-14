@@ -9,7 +9,7 @@ from sklearn.metrics import classification_report, accuracy_score
 from xgboost import XGBClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression 
 import shap
 import warnings
 warnings.filterwarnings("ignore")
@@ -71,13 +71,24 @@ def run_classifier(name, model, param_grid, X_train, X_test, y_train, y_test, X,
     grid.fit(X_train, y_train)
     best_model = grid.best_estimator_
     y_pred = best_model.predict(X_test)
+    
     print(f"\n=== Résultats {name} ===")
     print(classification_report(y_test, y_pred))
-    if hasattr(best_model, 'predict_proba'):
+
+    # SHAP pour Random Forest uniquement
+    if name == "Random Forest":
         explainer = shap.TreeExplainer(best_model)
         shap_values = explainer.shap_values(X_test)
-        shap.summary_plot(shap_values[:, :, 2], X_test, feature_names=features, show=False)
-        shap.summary_plot(shap_values[:, :, 0], X_test, feature_names=features, show=False)
+        
+        print("\n--- SHAP Summary Plot (classe 0) ---")
+        shap.summary_plot(shap_values[0], X_test, feature_names=features)
+        
+        print("\n--- SHAP Summary Plot (classe 1) ---")
+        shap.summary_plot(shap_values[1], X_test, feature_names=features)
+        
+        print("\n--- SHAP Summary Plot (classe 2) ---")
+        shap.summary_plot(shap_values[2], X_test, feature_names=features)
+
     return accuracy_score(y_test, y_pred)
 
 
@@ -86,25 +97,25 @@ def compare_models():
     (X_train, X_test, y_train, y_test), X, features = process_for_classification(df)
 
     scores = {}
-    scores['XGBoost'] = run_classifier("XGBoost", XGBClassifier(use_label_encoder=False, eval_metric='mlogloss'),
+    """scores['XGBoost'] = run_classifier("XGBoost", XGBClassifier(use_label_encoder=False, eval_metric='mlogloss'),
                                        {"max_depth": [3, 5], "n_estimators": [100, 200]},
-                                       X_train, X_test, y_train, y_test, X, features)
+                                       X_train, X_test, y_train, y_test, X, features)"""
 
     scores['Random Forest'] = run_classifier("Random Forest", RandomForestClassifier(),
                                             {"n_estimators": [100, 200]},
                                             X_train, X_test, y_train, y_test, X, features)
 
-    scores['KNN'] = run_classifier("KNN", KNeighborsClassifier(),
+    """scores['KNN'] = run_classifier("KNN", KNeighborsClassifier(),
                                    {"n_neighbors": [5]},
                                    X_train, X_test, y_train, y_test, X, features)
 
     scores['SVM'] = run_classifier("SVM", SVC(probability=True),
-                                   {"C": [0.1, 1, 10], "kernel": ["rbf"]},
+                                   {"C": [0.1, 5], "kernel": ["rbf"]},
                                    X_train, X_test, y_train, y_test, X, features)
 
     scores['Logistic Regression'] = run_classifier("Logistic Regression", LogisticRegression(max_iter=1000),
                                                   {"C": [0.1, 1, 10]},
-                                                  X_train, X_test, y_train, y_test, X, features)
+                                                  X_train, X_test, y_train, y_test, X, features)"""
 
     print("\n=== Tableau des performances ===")
     for model, score in scores.items():
